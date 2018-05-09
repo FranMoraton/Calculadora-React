@@ -52,7 +52,7 @@ class CalculatorKeys extends Component
             button =>
              <Button 
              key={button.id}
-             keyFunction={this.operationHandler(button.value)} 
+             keyFunction={() => this.operationHandler(button.value)} 
              className={button.className} 
              action={button.action}
              value={button.value}
