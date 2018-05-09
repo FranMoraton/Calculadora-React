@@ -11,8 +11,64 @@ import Button from './button.js'
     CALCULATE: "="
 }
 
+const KEYS = {
+    NUMBER: 'number',
+    OPERATOR: 'operator',
+    DECIMAL: 'decimal',
+    CLEAR: 'clear',
+    CALCULATE: 'calculate'
+}
+
+const NUMBERS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0'];
+
 class CalculatorKeys extends Component
 {
+    constructor(props) {
+        super(props);
+        this.state = {
+            buttonClicked: '',
+            storage: '',
+            number: this.props.number,
+            operator: ''
+        }
+    }
+
+    handleNumber = (number) => {
+        let displayNumber;
+        if (this.state.number === '0' || this.state.buttonClicked === KEYS.OPERATOR || this.state.buttonClicked === KEYS.CALCULATE) {
+            displayNumber = number;
+        } else {
+            displayNumber = this.state.number + number;
+        }
+        this.props.buttonClicked(displayNumber);
+        this.setState({ buttonClicked: KEYS.NUMBER, number: displayNumber });
+    }
+
+    handleAdd = () => {
+        this.props.buttonClicked('0');
+        this.setState({ storage: this.state.number, buttonClicked: KEYS.OPERATOR, operator: OPERATORS.ADD });
+    }
+
+    handleSubstract = () => {
+    }
+
+    handleMultiply = () => {
+    }
+
+    handleDivide = () => {
+    }
+
+    handleDecimal = () => {
+    }
+
+    handleClear = () => {
+    }
+
+
+    handleEqual = () => {
+        this.props.calculate(this.state.number, this.state.storage, this.state.operator);
+    }
+
    /*
     operationsCommand = {
        OPERATORS.ADD : add = () =>console.log(),
@@ -25,7 +81,32 @@ class CalculatorKeys extends Component
     }
 */
     operationHandler = (value) =>
-       /* operationsCommand[value]*/console.log(value);
+    {
+        console.log(value);
+            if(NUMBERS.includes(value))
+            {
+                /*
+                let displayNumber;
+
+                if (this.state.buttonClicked === KEYS.OPERATOR || this.state.buttonClicked === KEYS.CALCULATE) {
+                    return;
+                }
+
+                displayNumber = this.state.value + value;
+                this.props.buttonClicked(displayNumber);
+                this.setState({ buttonClicked: KEYS.NUMBER, number: displayNumber});
+                console.log(displayNumber);
+            } else {*/
+                this.handleNumber(value);
+            }else if (value === OPERATORS.ADD) {
+             this.handleAdd()
+            }
+            else if (value === OPERATORS.CALCULATE) {
+                this.handleEqual()
+            }
+
+    }
+
 
     getKeys(){
     const calculatorButtons = [
@@ -52,7 +133,7 @@ class CalculatorKeys extends Component
             button =>
              <Button 
              key={button.id}
-             keyFunction={() => this.operationHandler(button.value)} 
+             keyFunction={this.operationHandler} 
              className={button.className} 
              action={button.action}
              value={button.value}
