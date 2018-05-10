@@ -33,6 +33,11 @@ class CalculatorKeys extends Component
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+        this.setState({number:nextProps.number});
+    }
+
     handleNumber = (number) => {
         let displayNumber;
         if (this.state.number === '0' || this.state.buttonPressed === KEYS.OPERATOR || this.state.buttonPressed === KEYS.CALCULATE) {
@@ -44,9 +49,10 @@ class CalculatorKeys extends Component
         this.setState({ buttonPressed: KEYS.NUMBER, number: displayNumber });
     }
 
+
     handleAdd = () => {
         this.props.buttonClicked('0');
-        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.ADD });
+        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.ADD });      
     }
 
     handleSubstract = () => {
@@ -74,7 +80,7 @@ class CalculatorKeys extends Component
 
 
     handleEqual = () => {
-        this.props.calculate(this.state.storage, this.state.number, this.state.operator);
+        this.props.calculate(this.state.storage, this.state.number, this.state.operator);        
     }
 
    
@@ -134,7 +140,7 @@ class CalculatorKeys extends Component
              />)
     }
     render = () =>
-    
+     
          <div className ="calculator__keys">
         {this.getKeys()}
         </div>;
