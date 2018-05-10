@@ -8,7 +8,7 @@ class Button extends Component
             key={this.props.id} 
             className={this.props.className} 
             data-action={this.props.action}
-            onClick={() =>this.props.keyFunction(this.props.value)}
+            onClick={this.props.keyFunction}
         >{this.props.value}</button>
     }
 }
