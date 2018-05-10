@@ -26,7 +26,7 @@ class CalculatorKeys extends Component
     constructor(props) {
         super(props);
         this.state = {
-            buttonClicked: '',
+            buttonPressed: '',
             storage: '',
             number: this.props.number,
             operator: ''
@@ -35,76 +35,70 @@ class CalculatorKeys extends Component
 
     handleNumber = (number) => {
         let displayNumber;
-        if (this.state.number === '0' || this.state.buttonClicked === KEYS.OPERATOR || this.state.buttonClicked === KEYS.CALCULATE) {
+        if (this.state.number === '0' || this.state.buttonPressed === KEYS.OPERATOR || this.state.buttonPressed === KEYS.CALCULATE) {
             displayNumber = number;
         } else {
             displayNumber = this.state.number + number;
         }
         this.props.buttonClicked(displayNumber);
-        this.setState({ buttonClicked: KEYS.NUMBER, number: displayNumber });
+        this.setState({ buttonPressed: KEYS.NUMBER, number: displayNumber });
     }
 
     handleAdd = () => {
         this.props.buttonClicked('0');
-        this.setState({ storage: this.state.number, buttonClicked: KEYS.OPERATOR, operator: OPERATORS.ADD });
+        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.ADD });
     }
 
     handleSubstract = () => {
+        this.props.buttonClicked('0');
+        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.SUBSTRACT });
     }
 
     handleMultiply = () => {
+        this.props.buttonClicked('0');
+        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.MULTIPLY });
     }
 
     handleDivide = () => {
+        this.props.buttonClicked('0');
+        this.setState({ storage: this.state.number, buttonPressed: KEYS.OPERATOR, operator: OPERATORS.DIVIDE });
     }
 
     handleDecimal = () => {
     }
 
     handleClear = () => {
+        this.props.buttonClicked('0');
+        this.setState({ storage: '', buttonPressed: '', operator: '' , number: '0'});
     }
 
 
     handleEqual = () => {
-        this.props.calculate(this.state.number, this.state.storage, this.state.operator);
+        this.props.calculate(this.state.storage, this.state.number, this.state.operator);
     }
 
-   /*
+   
     operationsCommand = {
-       OPERATORS.ADD : add = () =>console.log(),
-       OPERATORS.SUBSTRACT :  substract = () =>console.log(),
-       OPERATORS.MULTIPLY : multiply = () =>console.log(),
-       OPERATORS.DIVIDE :  divide = () =>console.log(),
-       OPERATORS.DECIMAL : decimal = () =>console.log(),
-       OPERATORS.CLEAR : clear = () =>console.log(),
-       OPERATORS.CALCULATE : calculate = () =>console.log()
-    }
-*/
+    [OPERATORS.ADD] : this.handleAdd,
+    [OPERATORS.SUBSTRACT] :  this.handleSubstract,
+    [OPERATORS.MULTIPLY] : this.handleMultiply,
+    [OPERATORS.DIVIDE] :  this.handleDivide,
+    [OPERATORS.DECIMAL] : this.handleDecimal,
+    [OPERATORS.CLEAR] : this.handleClear,
+    [OPERATORS.CALCULATE] : this.handleEqual
+    }    
+
+
+
     operationHandler = (value) =>
     {
-        console.log(value);
             if(NUMBERS.includes(value))
             {
-                /*
-                let displayNumber;
-
-                if (this.state.buttonClicked === KEYS.OPERATOR || this.state.buttonClicked === KEYS.CALCULATE) {
-                    return;
-                }
-
-                displayNumber = this.state.value + value;
-                this.props.buttonClicked(displayNumber);
-                this.setState({ buttonClicked: KEYS.NUMBER, number: displayNumber});
-                console.log(displayNumber);
-            } else {*/
                 this.handleNumber(value);
-            }else if (value === OPERATORS.ADD) {
-             this.handleAdd()
-            }
-            else if (value === OPERATORS.CALCULATE) {
-                this.handleEqual()
-            }
-
+            } else {
+                this.operationsCommand[value]();
+            }  
+            
     }
 
 

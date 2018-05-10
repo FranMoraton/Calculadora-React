@@ -16,21 +16,28 @@ class Calculator extends Component
   changeDisplay = (number) => {
     this.setState({ result: number });
   }
-
+/*
+  calculateCommand = [
+     [OPERATORS.ADD]:{ () => return},
+     [OPERATORS.SUBSTRACT]:,
+     [OPERATORS.MULTIPLY]:,
+     [OPERATORS.DIVIDE]: 
+  ]
+*/
   calculate = (n1, n2, operator) => {
     let result = ''
 
     if (operator === OPERATORS.ADD) {
       result = parseFloat(n1) + parseFloat(n2)
-    } else if (operator === 'subtract') {
+    } else if (operator === OPERATORS.SUBSTRACT) {
       result = parseFloat(n1) - parseFloat(n2)
-    } else if (operator === 'multiply') {
+    } else if (operator === OPERATORS.MULTIPLY) {
       result = parseFloat(n1) * parseFloat(n2)
-    } else if (operator === 'divide') {
+    } else if (operator === OPERATORS.DIVIDE) {
       result = parseFloat(n1) / parseFloat(n2)
     }
 
-    this.setState({ result: result });
+    this.changeDisplay( result );
   }
 
     
